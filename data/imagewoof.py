@@ -47,6 +47,18 @@ class ImageWoof(data.Dataset):
         self.dataset='imagewoof2-320'
         self.noise_type=noise_type
         self.nb_classes=10
+    self.class_map = {
+                         'n02086240':0,
+                         'n02096294':1,
+                         'n02089973':2,
+                         'n02111889':3,
+                         'n02115641':4,
+                         'n02105641':5,
+                         'n02087394':6,
+                         'n02088364':7,
+                         'n02099601':8,
+                         'n02093754':9
+    }
 
         if download:
             self.download()
@@ -58,7 +70,7 @@ class ImageWoof(data.Dataset):
         # now load the picked numpy arrays
         if self.train:
             self.train_data = []
-            self.train_labels = []
+            train_labels = []
             if csv_file is None:
                 path = os.path.join(self.root, self.dataset, 'train')
                 classes = os.listdir(path) 
@@ -67,7 +79,8 @@ class ImageWoof(data.Dataset):
                     files = os.listdir(pth)
                     file_paths = [os.path.join(pth, f) for f in files]
                     self.train_data += files
-                    self.train_labels += [str(pth).split('/')[-1]]*len(files)
+                    train_labels += [str(pth).split('/')[-1]]*len(files)
+                    self.train_labels = [self.class_map[i] for i in train_labels]
 
             else:
                 csv_file_path = os.path.join(self.root, csv_file)
@@ -86,7 +99,7 @@ class ImageWoof(data.Dataset):
         else:
             if csv_file in None:
                 self.test_data = []
-                self.test_labels = []
+                test_labels = []
                 path = Path(os.path.join(self.root, self.dataset, 'val'))
                 classes = os.listdir(path) 
                 for cls in classes:
@@ -94,7 +107,8 @@ class ImageWoof(data.Dataset):
                     files = os.listdir(pth)
                     file_paths = [os.path.join(pth, f) for f in files]
                     self.test_data += files
-                    self.test_labels += [str(pth).split('/')[-1]]*len(files)
+                    test_labels += [str(pth).split('/')[-1]]*len(files)
+                    self.test_labels = [self.class_map[i] for i in test_labels]
 
             else:
                 csv_file_path = os.path.join(self.root, csv_file)
