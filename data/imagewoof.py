@@ -2,7 +2,6 @@ from __future__ import print_function
 from PIL import Image
 import os
 import os.path
-from pathlib import Path
 import numpy as np
 import sys
 import pandas as pd
@@ -61,10 +60,12 @@ class ImageWoof(data.Dataset):
             self.train_data = []
             self.train_labels = []
             if csv_file is None:
-                path = Path(os.path.join(self.root, self.dataset, 'train'))
-                classes = path.ls()
-                for pth in classes:
-                    files = pth.ls()
+                path = os.path.join(self.root, self.dataset, 'train')
+                classes = os.listdir(path) 
+                for cls in classes:
+                    pth = os.path.join(path, cls)
+                    files = os.listdir(pth)
+                    file_paths = [os.path.join(pth, f) for f in files]
                     self.train_data += files
                     self.train_labels += [str(pth).split('/')[-1]]*len(files)
 
@@ -87,9 +88,11 @@ class ImageWoof(data.Dataset):
                 self.test_data = []
                 self.test_labels = []
                 path = Path(os.path.join(self.root, self.dataset, 'val'))
-                classes = path.ls()
-                for pth in classes:
-                    files = pth.ls()
+                classes = os.listdir(path) 
+                for cls in classes:
+                    pth = os.path.join(path, cls)
+                    files = os.listdir(pth)
+                    file_paths = [os.path.join(pth, f) for f in files]
                     self.test_data += files
                     self.test_labels += [str(pth).split('/')[-1]]*len(files)
 
