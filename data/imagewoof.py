@@ -47,18 +47,18 @@ class ImageWoof(data.Dataset):
         self.dataset='imagewoof2-320'
         self.noise_type=noise_type
         self.nb_classes=10
-    self.class_map = {
-                         'n02086240':0,
-                         'n02096294':1,
-                         'n02089973':2,
-                         'n02111889':3,
-                         'n02115641':4,
-                         'n02105641':5,
-                         'n02087394':6,
-                         'n02088364':7,
-                         'n02099601':8,
-                         'n02093754':9
-    }
+        self.class_map = {
+                             'n02086240':0,
+                             'n02096294':1,
+                             'n02089973':2,
+                             'n02111889':3,
+                             'n02115641':4,
+                             'n02105641':5,
+                             'n02087394':6,
+                             'n02088364':7,
+                             'n02099601':8,
+                             'n02093754':9
+        }
 
         if download:
             self.download()
