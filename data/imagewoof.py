@@ -137,11 +137,10 @@ class ImageWoof(data.Dataset):
 
     def _check_integrity(self):
         root = self.root
-        for fentry in (self.train_list + self.test_list):
-            filename, md5 = fentry[0], fentry[1]
-            fpath = os.path.join(root, self.base_folder, filename)
-            if not check_integrity(fpath, md5):
-                return False
+        filename = self.filename
+        fpath = os.path.join(root, self.base_folder, filename)
+        if not check_integrity(fpath, self.tgz_md5):
+            return False
         return True
 
     def download(self):
