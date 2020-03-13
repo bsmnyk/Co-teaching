@@ -78,7 +78,7 @@ class ImageWoof(data.Dataset):
                     pth = os.path.join(path, cls)
                     files = os.listdir(pth)
                     file_paths = [os.path.join(pth, f) for f in files]
-                    self.train_data += files
+                    self.train_data += file_paths
                     train_labels += [str(pth).split('/')[-1]]*len(files)
                     self.train_labels = [self.class_map[i] for i in train_labels]
 
@@ -106,7 +106,7 @@ class ImageWoof(data.Dataset):
                     pth = os.path.join(path, cls)
                     files = os.listdir(pth)
                     file_paths = [os.path.join(pth, f) for f in files]
-                    self.test_data += files
+                    self.test_data += file_paths
                     test_labels += [str(pth).split('/')[-1]]*len(files)
                     self.test_labels = [self.class_map[i] for i in test_labels]
 
