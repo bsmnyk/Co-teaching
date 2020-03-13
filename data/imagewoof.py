@@ -39,7 +39,7 @@ class ImageWoof(data.Dataset):
     def __init__(self, root, train=True, csv_file=None,
                  transform=None, target_transform=None,
                  download=False, 
-                 noise_type=None, noise_rate=0.2, random_state=0):
+                 noise_type='clean', noise_rate=0.2, random_state=0):
         self.root = os.path.expanduser(root)
         self.transform = transform
         self.target_transform = target_transform
