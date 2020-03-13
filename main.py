@@ -33,6 +33,7 @@ parser.add_argument('--num_workers', type=int, default=4, help='how many subproc
 parser.add_argument('--num_iter_per_epoch', type=int, default=400)
 parser.add_argument('--epoch_decay_start', type=int, default=80)
 parser.add_argument('--image_size', type=int, default=192)
+parser.add_argument('--batch_size', type=int, default=128)
 
 args = parser.parse_args()
 
@@ -41,7 +42,7 @@ torch.manual_seed(args.seed)
 torch.cuda.manual_seed(args.seed)
 
 # Hyper Parameters
-batch_size = 128
+batch_size = args.batch_size
 learning_rate = args.lr 
 
 # load dataset
@@ -120,7 +121,7 @@ if args.dataset=='imagewoof':
     sz = args.image_size
     tfms = transforms.Compose([transforms.Resize((sz,sz)),
                                transforms.ToTensor()
-                             )]
+                             ])
     train_dataset = ImageWoof(root='./data/',
                                 download=True,  
                                 train=True, 

@@ -100,7 +100,7 @@ class ImageWoof(data.Dataset):
             if csv_file is None:
                 self.test_data = []
                 test_labels = []
-                path = Path(os.path.join(self.root, self.dataset, 'val'))
+                path = os.path.join(self.root, self.dataset, 'val')
                 classes = os.listdir(path) 
                 for cls in classes:
                     pth = os.path.join(path, cls)
@@ -136,7 +136,7 @@ class ImageWoof(data.Dataset):
 
         # doing this so that it is consistent with all other datasets
         # to return a PIL Image
-        img = Image.fromarray(img)
+        img = Image.fromarray(img).convert('RGB')
 
         if self.transform is not None:
             img = self.transform(img)
