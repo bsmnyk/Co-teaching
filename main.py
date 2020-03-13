@@ -7,6 +7,7 @@ from torch.autograd import Variable
 import torchvision.transforms as transforms
 from data.cifar import CIFAR10, CIFAR100
 from data.mnist import MNIST
+from data.imagewoof import ImageWoof
 from model import CNN
 import argparse, sys
 import numpy as np
@@ -31,6 +32,7 @@ parser.add_argument('--print_freq', type=int, default=50)
 parser.add_argument('--num_workers', type=int, default=4, help='how many subprocesses to use for data loading')
 parser.add_argument('--num_iter_per_epoch', type=int, default=400)
 parser.add_argument('--epoch_decay_start', type=int, default=80)
+parser.add_argument('--image_size', type=int, default=192)
 
 args = parser.parse_args()
 
@@ -105,6 +107,32 @@ if args.dataset=='cifar100':
                                 download=True,  
                                 train=False, 
                                 transform=transforms.ToTensor(),
+                                noise_type=args.noise_type,
+                                noise_rate=args.noise_rate
+                            )
+
+if args.dataset=='imagewoof':
+    input_channel=3
+    num_classes=10
+    args.top_bn = False
+    args.epoch_decay_start = 100
+    args.n_epoch = 50
+    sz = args.image_size
+    tfms = transforms.Compose([transforms.Resize((sz,sz)),
+                               transforms.ToTensor()
+                             )]
+    train_dataset = ImageWoof(root='./data/',
+                                download=True,  
+                                train=True, 
+                                transform=tfms,
+                                noise_type=args.noise_type,
+                                noise_rate=args.noise_rate
+                            )
+    
+    test_dataset = ImageWoof(root='./data/',
+                                download=True,  
+                                train=False, 
+                                transform=tfms,
                                 noise_type=args.noise_type,
                                 noise_rate=args.noise_rate
                             )

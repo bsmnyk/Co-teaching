@@ -97,7 +97,7 @@ class ImageWoof(data.Dataset):
                 _train_labels=[i[0] for i in self.train_labels]
                 self.noise_or_not = np.transpose(self.train_noisy_labels)==np.transpose(_train_labels)
         else:
-            if csv_file in None:
+            if csv_file is None:
                 self.test_data = []
                 test_labels = []
                 path = Path(os.path.join(self.root, self.dataset, 'val'))
