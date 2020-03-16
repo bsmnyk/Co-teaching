@@ -83,10 +83,10 @@ class ImageWoof(data.Dataset):
                     self.train_labels = [self.class_map[i] for i in train_labels]
 
             else:
-                csv_file_path = os.path.join(self.root, csv_file)
+                csv_file_path = os.path.join('./', csv_file)
                 train_df = pd.read_csv(csv_file_path)
-                self.train_data = train_df.files
-                self.train_labels = train_df.label
+                self.train_data = [os.path.join(self.root, i) for i in train_df.files]
+                self.train_labels = [self.class_map[i] for i in train_df.label]
 
             #if noise_type is not None:
             if noise_type !='clean':
@@ -111,10 +111,10 @@ class ImageWoof(data.Dataset):
                     self.test_labels = [self.class_map[i] for i in test_labels]
 
             else:
-                csv_file_path = os.path.join(self.root, csv_file)
+                csv_file_path = os.path.join('./', csv_file)
                 test_df = pd.read_csv(csv_file_path)
-                self.test_data = test_df.files
-                self.test_labels = test_df.label
+                self.test_data = [os.path.join(self.root, i) for i in test_df.files]
+                self.test_labels = [self.class_map[i] for i in test_df.label]
 
 
 

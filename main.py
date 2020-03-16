@@ -34,6 +34,7 @@ parser.add_argument('--num_iter_per_epoch', type=int, default=400)
 parser.add_argument('--epoch_decay_start', type=int, default=80)
 parser.add_argument('--image_size', type=int, default=192)
 parser.add_argument('--batch_size', type=int, default=128)
+parser.add_argument('--csv_file', type=str, default=None)
 
 args = parser.parse_args()
 
@@ -127,7 +128,8 @@ if args.dataset=='imagewoof':
                                 train=True, 
                                 transform=tfms,
                                 noise_type=args.noise_type,
-                                noise_rate=args.noise_rate
+                                noise_rate=args.noise_rate,
+                                csv_file=args.csv_file
                             )
     
     test_dataset = ImageWoof(root='./data/',
@@ -135,7 +137,8 @@ if args.dataset=='imagewoof':
                                 train=False, 
                                 transform=tfms,
                                 noise_type=args.noise_type,
-                                noise_rate=args.noise_rate
+                                noise_rate=args.noise_rate,
+                                csv_file=args.csv_file
                             )
 
 if args.forget_rate is None:
