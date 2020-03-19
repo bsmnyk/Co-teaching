@@ -9,6 +9,7 @@ from data.cifar import CIFAR10, CIFAR100
 from data.mnist import MNIST
 from data.imagewoof import ImageWoof
 from model import CNN
+from torchvision.models import resnet34
 import argparse, sys
 import numpy as np
 import datetime
@@ -35,6 +36,8 @@ parser.add_argument('--epoch_decay_start', type=int, default=80)
 parser.add_argument('--image_size', type=int, default=192)
 parser.add_argument('--batch_size', type=int, default=128)
 parser.add_argument('--csv_file', type=str, default=None)
+parser.add_argument('--resnet', type=bool, default=True)
+parser.add_argument('--pretrained', type=bool, default=True)
 
 args = parser.parse_args()
 
@@ -289,12 +292,25 @@ def main():
                                               shuffle=False)
     # Define models
     print 'building model...'
-    cnn1 = CNN(input_channel=input_channel, n_outputs=num_classes)
+    if args.resnet == True:
+        if args.pretrained == True:
+            cnn1 = resnet34(pretrained=True)
+        else:
+            cnn1 = resnet34()
+    else:
+        cnn1 = CNN(input_channel=input_channel, n_outputs=num_classes)
     cnn1.cuda()
     print cnn1.parameters
     optimizer1 = torch.optim.Adam(cnn1.parameters(), lr=learning_rate)
-    
-    cnn2 = CNN(input_channel=input_channel, n_outputs=num_classes)
+   
+
+    if args.resnet == True:
+        if args.pretrained == True:
+            cnn2 = resnet34(pretrained=True)
+        else:
+            cnn2 = resnet34()
+    else:
+        cnn2 = CNN(input_channel=input_channel, n_outputs=num_classes)
     cnn2.cuda()
     print cnn2.parameters
     optimizer2 = torch.optim.Adam(cnn2.parameters(), lr=learning_rate)
