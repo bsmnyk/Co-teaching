@@ -36,8 +36,8 @@ parser.add_argument('--epoch_decay_start', type=int, default=80)
 parser.add_argument('--image_size', type=int, default=192)
 parser.add_argument('--batch_size', type=int, default=128)
 parser.add_argument('--csv_file', type=str, default=None)
-parser.add_argument('--resnet', type=bool, default=True)
-parser.add_argument('--pretrained', type=bool, default=True)
+parser.add_argument('--resnet', type=bool, default=False)
+parser.add_argument('--pretrained', type=bool, default=False)
 
 args = parser.parse_args()
 
